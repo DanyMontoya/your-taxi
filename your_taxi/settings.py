@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import pymysql  # ////////// SE IMPORTA ESTA LIBRERIA
 
+pymysql.install_as_MySQLdb()  # //////// SE LLAMA ESTA FUNCION
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -76,8 +78,12 @@ WSGI_APPLICATION = 'your_taxi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  # usa el backend de MySQL
+        'NAME': 'your_taxi',  # Nombre de la base de datos
+        'USER': 'root',  # Tu usuario de MySQL
+        'PASSWORD': 'damteasy',  # Tu contrasena de MySQL
+        'HOST': 'localhost',  # o la IP de tus servicios de base de datos
+        'PORT': '3306',  # PUERTO POR DEFECTO DE MySQLAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
