@@ -10,5 +10,8 @@ class Usuarios(models.Model):
     telefono = models.CharField(max_length=30, null=True)
     correo = models.EmailField(max_length=50, null=True)
 
+    # def __str__(self):
+    #     return self.nombres
+
     def __str__(self):
-        return self.nombres
+        return f"{self.nombres} ({self.ciudad})" if self.ciudad else self.nombres
