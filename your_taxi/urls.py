@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from users.views import UsuariosViewset, TaxistasViewSet, VehiculosViewSet
+from solicitudes.views import ServiciosViewSet
 router = DefaultRouter()
 router.register('usuarios', UsuariosViewset, 'view_usuarios')
 router.register('taxistas', TaxistasViewSet, 'view_taxistas')
 router.register('vehiculos', VehiculosViewSet, 'view_vehiculos')
+router.register('servicios', ServiciosViewSet, 'view_servicios')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -11,6 +11,3 @@ class Taxistas(models.Model):
 
     def __str__(self):
         return f"{self.nombres} - {self.vehiculo.placa}"
-
-    # def __str__(self):
-    # return f"{self.nombres} - {self.vehiculo.placa if self.vehiculo else 'Sin vehículo'}"
