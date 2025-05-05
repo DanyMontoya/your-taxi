@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+# para poder que me tega encuenta la autenticacion del usuario ////////////////////
+AUTH_USER_MODEL = 'users.Usuarios'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
