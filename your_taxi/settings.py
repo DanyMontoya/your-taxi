@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'users',
     'solicitudes',
     'corsheaders',
@@ -47,6 +48,18 @@ INSTALLED_APPS = [
 
 # para poder que me tega encuenta la autenticacion del usuario ////////////////////
 AUTH_USER_MODEL = 'users.Usuarios'
+AUTHENTICATION_BACKENDS = [
+    'users.backends.EmailBackend',
+]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

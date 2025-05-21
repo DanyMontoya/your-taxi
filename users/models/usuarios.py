@@ -6,9 +6,9 @@ class UsuarioManager(BaseUserManager):
     """Gestor personalizado de usuarios."""
 
     def create_user(self, email, password=None, **extra_fields):
-        """Crea y retorna un usuario con correo y contraseña."""
+        """Crea y retorna un usuario con email y contraseña."""
         if not email:
-            raise ValueError("El correo electrónico es obligatorio")
+            raise ValueError("El email es obligatorio")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -36,14 +36,26 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     nombres = models.CharField(max_length=100)
     genero = models.CharField(max_length=15, null=True)
     fecha_nacimiento = models.DateField()
-    correo = models.EmailField(unique=True)
+    email = models.EmailField(unique=True)  # Cambiado de 'correo' a 'email'
     telefono = models.CharField(max_length=20)
     username = models.CharField(max_length=150, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'correo'
-    REQUIRED_FIELDS = ['username', 'documento']
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = 'email'
+
+    # lo comente para pruebas 14/05/2025
+    REQUIRED_FIELDS = [
+        'username',
+        'documento',
+        'tipo_documento',
+        'primer_apellido',
+        'nombres',
+        'fecha_nacimiento',
+        'telefono',
+    ]
 
     def __str__(self):
-        return f"{self.nombres} ({self.correo})"
+        return f"{self.nombres} ({self.email})"

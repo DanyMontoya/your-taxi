@@ -15,21 +15,35 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-# from django.urls import path
+from solicitudes.views import ServiciosViewSet, CalificacionViewSet
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from users.views import UsuariosViewSet, TaxistasViewSet, VehiculosViewSet
-from solicitudes.views import ServiciosViewSet
+from users.views import (
+    UsuariosViewSet, TaxistasViewSet, VehiculosViewSet, PerfilUsuarioViewSet,
+    MetodoPagoViewSet, ViajeViewSet, UsuarioPerfilCompletoAPIView, LoginView,
+)
+from rest_framework.authtoken.views import obtain_auth_token
 
 router = DefaultRouter()
-router.register('taxistas', TaxistasViewSet, 'view_taxistas')
-router.register('vehiculos', VehiculosViewSet, 'view_vehiculos')
-router.register('servicios', ServiciosViewSet, 'view_servicios')
-router.register('usuarios', UsuariosViewSet, 'view_usuarios')
+router.register('taxistas', TaxistasViewSet, basename='taxistas')
+router.register('vehiculos', VehiculosViewSet, basename='vehiculos')
+router.register('servicios', ServiciosViewSet, basename='servicios')
+router.register('usuarios', UsuariosViewSet, basename='usuarios')
+router.register('calificaciones', CalificacionViewSet,
+                basename='calificaciones')
+router.register('perfil', PerfilUsuarioViewSet, basename='perfil')
+router.register('metodos-pago', MetodoPagoViewSet, basename='metodospago')
+router.register('viajes', ViajeViewSet, basename='viajes')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
+    # Para login con token (opcional, si uso TokenAuthentication)
+    path('api/login-token/', obtain_auth_token, name='api_token_auth'),
+    path('api/login/', LoginView.as_view(), name='login'),
+    path('usuario/perfil-completo/', UsuarioPerfilCompletoAPIView.as_view(),
+         name='usuario-perfil-completo'),
 ]
