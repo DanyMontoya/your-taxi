@@ -1,0 +1,15 @@
+# para que me cree este archivo con lo que tengo instalado lo hago con: (myvenv) λ pip freeze > requirements.txt  "requirements es el nombre que se le dio, pero puede ser cualquiera"
+asgiref==3.8.1
+cffi==1.17.1
+cryptography==44.0.3
+Django==5.2
+django-cors-headers==4.7.0
+djangorestframework==3.16.0
+# pycparser==2.22
+# PyMySQL==1.1.1
+sqlparse==0.5.3
+tzdata==2025.2
+gunicorn # es el servidor web que utilzamos en nuestro servidor remoto que hace que nustra aplicacion en python funcione "es lo mismo que: (myvenv) λ python manage.py runserver pero mas potente
+psycopg2-binary # para conectar mi base de datos remoto PostgreSQL 16
+dj-database-url # me permite configurar la base de datos de manera practica
+whitenoise # me permite que el servidor que esta remoto me muestre los archivos estaticos, osea el css de mi aplicacion

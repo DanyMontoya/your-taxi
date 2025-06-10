@@ -9,11 +9,12 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
-import pymysql  # ////////// SE IMPORTA ESTA LIBRERIA
+# import pymysql  # ////////// SE IMPORTA ESTA LIBRERIA
+import dj_database_url
 
-pymysql.install_as_MySQLdb()  # //////// SE LLAMA ESTA FUNCION
+# pymysql.install_as_MySQLdb()  # //////// SE LLAMA ESTA FUNCION
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -63,6 +64,8 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # se agrega para archivos estaticos de DRF "django_rest_framework"
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -97,17 +100,28 @@ WSGI_APPLICATION = 'your_taxi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# database funcional en local
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',  # usa el backend de MySQL
+#         'NAME': 'your_taxi',  # Nombre de la base de datos
+#         'USER': 'root',  # Tu usuario de MySQL
+#         'PASSWORD': 'damteasy',  # Tu contrasena de MySQL
+#         'HOST': 'localhost',  # o la IP de tus servicios de base de datos
+#         'PORT': '3306',  # PUERTO POR DEFECTO DE MySQLAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+# fumcional remoto
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',  # usa el backend de MySQL
-        'NAME': 'your_taxi',  # Nombre de la base de datos
-        'USER': 'root',  # Tu usuario de MySQL
-        'PASSWORD': 'damteasy',  # Tu contrasena de MySQL
-        'HOST': 'localhost',  # o la IP de tus servicios de base de datos
-        'PORT': '3306',  # PUERTO POR DEFECTO DE MySQLAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600,
+        ssl_require=True
 
+    )
+
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -144,7 +158,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'stacticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
